@@ -1,8 +1,23 @@
 <?php
 session_start();
+require('../dbconnect.php');
 
 if (!isset($_SESSION['join'])) {
   header('Location: index.php');
+  exit();
+}
+
+if (!empty($_POST)) {
+  // 登録処理をする
+  $statement = $db->prepare('INSERT INTO users SET name=?, email=?, password=?, created=NOW()');
+  echo $ret = $statement->execute(array(
+    $_SESSION['join']['name'],
+    $_SESSION['join']['email'],
+    sha1($_SESSION['join']['password'])
+  ));
+  unset($_SESSION['join']);
+
+  header('Location: check.php');
   exit();
 }
 ?>
@@ -26,6 +41,7 @@ if (!isset($_SESSION['join'])) {
     <div class="registration"><h1>会員登録</h1></div>
     <p>記入した内容を確認して、「登録する」ボタンをクリックしてください。</p>
     <form action="" method="post">
+      <input type="hidden" name="action" value="submit">
       <dl>
         <dt>ニックネーム</dt>
         <dd>

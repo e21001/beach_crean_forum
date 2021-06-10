@@ -1,4 +1,6 @@
 <?php
+require('../dbconnect.php');
+
 session_start();
 
 if (!empty($_POST)) {
@@ -15,6 +17,15 @@ if (!empty($_POST)) {
   if ($_POST['password'] == '') {
     $error['password'] = 'blank';
   }
+  // 重複アカウントのチェック
+  if (empty($error)) {
+    $user = $db->prepare('SELECT COUNT(*) AS cnt FROM users WHERE email=?');
+    $user->execute(array($_POST['email']));
+    $record = $user->fetch();
+    if ($record['cnt'] > 0) {
+      $error['email'] = 'duplicate';
+    }
+  }
 
   if(empty($error)) {
     $_SESSION['join'] = $_POST;
@@ -22,6 +33,8 @@ if (!empty($_POST)) {
     exit();
   }
 }
+
+
 
 // 書き直し
 if ($_REQUEST['action'] == 'rewrite') {
@@ -62,6 +75,9 @@ if ($_REQUEST['action'] == 'rewrite') {
             <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES) ?>">
             <?php if ($error['email'] == 'blank'): ?>
               <p class="error">* メールアドレスを入力してください</p>
+            <?php endif ?>
+            <?php if ($error['email'] == 'duplicate'): ?>
+              <p class="error">* このメールアドレスはすでに登録されています</p>
             <?php endif ?>
           </dd>
           <dt>パスワード<span>必須</span></dt>
