@@ -22,6 +22,12 @@ if (!empty($_POST)) {
     exit();
   }
 }
+
+// 書き直し
+if ($_REQUEST['action'] == 'rewrite') {
+  $_POST = $_SESSION['join'];
+  $error['rewrite'] = true;
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +66,7 @@ if (!empty($_POST)) {
           </dd>
           <dt>パスワード<span>必須</span></dt>
           <dd>
-            <input type="password" name="password" size="10" maxlength="20">
+            <input type="password" name="password" size="10" maxlength="20" value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES) ?>">
             <?php if ($error['password'] == 'blank'): ?>
               <p class="error">* パスワードを入力してください</p>
             <?php endif ?>
