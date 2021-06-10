@@ -1,3 +1,29 @@
+<?php
+session_start();
+
+if (!empty($_POST)) {
+  // エラー項目の確認
+  if ($_POST['name'] == '') {
+    $error['name'] = 'blank';
+  }
+  if ($_POST['email'] == '') {
+    $error['email'] = 'blank';
+  }
+  if (strlen($_POST['password']) < 4) {
+    $error['password'] = 'length';
+  }
+  if ($_POST['password'] == '') {
+    $error['password'] = 'blank';
+  }
+
+  if(empty($error)) {
+    $_SESSION['join'] = $_POST;
+    header('Location: check.php');
+    exit();
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -19,11 +45,29 @@
       <form action="" method="post">
         <dl>
           <dt>ニックネーム<span>必須</span></dt>
-          <dd><input type="text" name="name" size="35" maxlength="255"></dd>
+          <dd>
+            <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['name'], ENT_QUOTES) ?>">
+            <?php if ($error['name'] == 'blank'): ?>
+              <p class="error">* ニックネームを入力してください</p>
+            <?php endif ?>
+          </dd>
           <dt>メールアドレス<span>必須</span></dt>
-          <dd><input type="text" name="email" size="35" maxlength="255"></dd>
+          <dd>
+            <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES) ?>">
+            <?php if ($error['email'] == 'blank'): ?>
+              <p class="error">* メールアドレスを入力してください</p>
+            <?php endif ?>
+          </dd>
           <dt>パスワード<span>必須</span></dt>
-          <dd><input type="password" name="password" size="10" maxlength="20"></dd>
+          <dd>
+            <input type="password" name="password" size="10" maxlength="20">
+            <?php if ($error['password'] == 'blank'): ?>
+              <p class="error">* パスワードを入力してください</p>
+            <?php endif ?>
+            <?php if ($error['password'] == 'length'): ?>
+              <p class="error">* パスワードは4文字以上で入力してください</p>
+            <?php endif ?>
+          </dd>
         </dl>
         <div><input type="submit" value="入力内容を確認する"></div>
       </form>
