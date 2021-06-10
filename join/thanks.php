@@ -14,5 +14,8 @@
         <p>会員登録する</p>
       </div>
     </header>
+    <div class="registration"><h1>会員登録</h1></div>
+    <p>ユーザー登録が完了しました。</p>
+    <p><a href="../">ログインする</a></p>
   </body>
 </html>
