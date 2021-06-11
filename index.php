@@ -50,40 +50,49 @@ $posts = $db->query('SELECT u.name, p.* FROM users u, posts p WHERE u.id=p.user_
     <title>beach_clean_volunteer</title>
     <meta name="description" content="みんなでビーチクリーンしよう">
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/beach_clean.css">
+    <link rel="stylesheet" href="beach_clean.css">
   </head>
   <body>
     <header>
-      <div class="header-wrapper">
-        <div class="header-logo"><a href="#">ビーチクリーン沖縄(仮)</a></div>
-        <p>会員登録する</p>
+      <div class="header-wrapper wrapper">
+        <div class="header-logo"><a href="#">適当なロゴ</a></div>
+        <div class="header-title">~ビーチクリーン募集掲示板(仮)~</div>
+        <p><a href="/join/index.php">会員登録する</a></p>
       </div>
     </header>
-    <form action="" method="post" enctype="multipart/form-data">
-      <dl>
-        <dt><?php echo htmlspecialchars($user['name'], ENT_QUOTES) ?>さん、メッセージをどうぞ</dt>
-        <dd>
-          <textarea name="message" rows="5" cols="100"></textarea>
-        </dd>
-        <dt>写真など</dt>
-        <dd>
-          <input type="file" name="image" size="35">
-          <?php if ($error['image'] == 'type'): ?>
-            <p class="error">* 写真などは「.jpg」または「.git」の画像を指定してください</p>
-          <?php endif ?>
-        </dd>
-      </dl>
-      <div>
-        <input type="submit" value="投稿する">
-      </div>
-    </form>
-    <?php foreach ($posts as $post): ?>
-      <div class="posted-image">
-        <img src="<?php echo './posted_picture/'. htmlspecialchars($post['picture'], ENT_QUOTES) ?>" width="100" height="100" alt="<?php echo htmlspecialchars($post['picture']) ?>">
-        <p>投稿者：<?php echo htmlspecialchars($post['name']) ?></p>
-        <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?></p>
-        <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES) ?></p>
-      </div>
-    <?php endforeach ?>
+    <main class="main-wrapper wrapper">
+      <article>
+        <form action="" method="post" enctype="multipart/form-data">
+          <dl>
+            <dt><?php echo htmlspecialchars($user['name'], ENT_QUOTES) ?>さん、何か投稿してみよう！</dt>
+            <dd>
+              <textarea name="message" rows="5" cols="100" placeholder="ビーチクリーンの募集、参加、報告または汚れてる海の情報などなんでもどうぞ"></textarea>
+            </dd>
+          </dl>
+          <div>
+            <p>写真など：<input type="file" name="image" size="35"></p>
+            <?php if ($error['image'] == 'type'): ?>
+              <p class="error">* 写真などは「.jpg」または「.git」の画像を指定してください</p>
+            <?php endif ?>
+            <input type="submit" value="投稿する">
+          </div>
+        </form>
+        <?php foreach ($posts as $post): ?>
+          <div class="posting">
+            <img src="<?php echo './posted_picture/'. htmlspecialchars($post['picture'], ENT_QUOTES) ?>" alt="<?php echo htmlspecialchars($post['picture']) ?>">
+            <div class="posting-str">
+              <p>投稿者：<?php echo htmlspecialchars($post['name']) ?></p>
+              <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?></p>
+              <p class="day">投稿日：<?php echo htmlspecialchars($post['created'], ENT_QUOTES) ?></p>
+            </div>
+          </div>
+        <?php endforeach ?>
+      </article>
+      <aside>
+        <p>ぱ</p>
+        <p>お</p>
+        <p>ん</p>
+      </aside>
+    </main>
   </body>
 </html>
