@@ -28,6 +28,7 @@ header {
 .header-title {
   font-size: 55px;
   padding: 20px 0;
+  margin-left: -140px;
 }
 .wrapper {
   margin: 0 30px;
@@ -35,8 +36,15 @@ header {
 }
 /* form */
 form {
+  margin-left: 30px;
   margin-bottom: 30px;
   font-size: 20px;
+}
+.poster {
+  color: #13a225;
+}
+form dt {
+  margin-bottom: 15px;
 }
 form div {
   display: flex;
@@ -70,9 +78,6 @@ article {
 .posting-str {
   margin: 4px 50px;
 }
-.day {
-  text-align: right;
-}
 aside {
   width: 20%;
   border-left: 2px #555454 solid;
@@ -81,4 +86,11 @@ aside {
 main {
   display: flex;
   justify-content: space-between;
+}
+/* detail */
+.back {
+  margin-left: 250px
+}
+.reply {
+  border-top: 0.1px #555454 solid;
 }

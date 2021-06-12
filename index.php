@@ -81,9 +81,12 @@ $posts = $db->query('SELECT u.name, p.* FROM users u, posts p WHERE u.id=p.user_
           <div class="posting">
             <img src="<?php echo './posted_picture/'. htmlspecialchars($post['picture'], ENT_QUOTES) ?>" alt="<?php echo htmlspecialchars($post['picture']) ?>">
             <div class="posting-str">
-              <p>投稿者：<?php echo htmlspecialchars($post['name']) ?></p>
-              <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?></p>
-              <p class="day">投稿日：<?php echo htmlspecialchars($post['created'], ENT_QUOTES) ?></p>
+              <p><span class="poster">投稿者</span>：<?php echo htmlspecialchars($post['name']. ' ') ?><span class="poster">投稿日</span>：<?php echo htmlspecialchars($post['created'], ENT_QUOTES) ?></p>
+              <?php if (mb_strlen(htmlspecialchars($post['message'], ENT_QUOTES)) > 50): ?>
+              <p><a href="detail.php"><?php echo mb_substr(htmlspecialchars($post['message'], ENT_QUOTES), 0, 50) ?>...</a></p>
+              <?php else: ?>
+              <p><a href="detail.php"><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?></a></p>
+              <?php endif ?>
             </div>
           </div>
         <?php endforeach ?>
