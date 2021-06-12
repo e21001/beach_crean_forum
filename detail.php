@@ -2,6 +2,28 @@
 session_start();
 require('dbconnect.php');
 
+// 返信の場合
+if (isset($_REQUEST['res'])) {
+  $response = $db->prepare('SELECT u.name, p* FROM users u, posts p WHERE u.id=p.user_id AND p.id=? ORDER BY p.created DESC');
+  $response->excute(array($_REQUEST['res']));
+
+  $table = $response->fetch();
+  $message = $table['name']. ' '.$table['message'];
+}
+// 投稿を記録する
+if (!empty($_POST)) {
+  if ($_POST['message']) {
+    $reply = $db->prepare('INSERT INTO posts SET message=?, user_id=?, reply_post_id=?, created=NOW()');
+    $reply->execute(array(
+      $_POST['message'],
+      $user['id'],
+      $_POST['reply_post_id']
+    ));
+
+    header('Location: detail.php'); exit();
+  }
+}
+
 $posts = $db->query('SELECT u.name, p.* FROM users u, posts p WHERE u.id=p.user_id ORDER BY p.created DESC');
 $post = $posts->fetch();
 ?>
@@ -32,7 +54,19 @@ $post = $posts->fetch();
         </div>
         <p class="back"><a href="index.php">戻る</a></p>
         <div class="reply">
-
+          <form class="reply-form" action="" method="post">
+            <textarea  name="message" rows="5" cols="40" placeholder="なんでもどうぞ"></textarea>
+            <div>
+              <input type="submit" value="投稿する">
+            </div>
+          </form>
+          <div class="reply-display">
+            この投稿への返信>>>
+            <div>
+              <p>返信者：　返信日</p>
+              <p>ここに返信</p>
+            </div>
+          </div>
         </div>
       </article>
       <aside>

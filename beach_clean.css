@@ -38,6 +38,7 @@ header {
 form {
   margin-left: 30px;
   margin-bottom: 30px;
+  margin-top: 10px;
   font-size: 20px;
 }
 .poster {
@@ -89,8 +90,25 @@ main {
 }
 /* detail */
 .back {
-  margin-left: 250px
+  margin-left: 250px;
+  padding-top: 10px;
 }
 .reply {
+  display: flex;
+  justify-content: space-around;
   border-top: 0.1px #555454 solid;
+}
+.reply-form {
+  width: 200px;
+  margin-left: -120px;
+  border-bottom: 0.1px #555454 solid;
+}
+.reply-display {
+  width: 440px;
+  padding-left: 20px;
+  border-left: 0.1px #555454 solid;
+  border-bottom: 0.1px #555454 solid;
+  flex-direction: column;
+}
+.reply-display div {
 }

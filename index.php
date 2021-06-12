@@ -42,6 +42,7 @@ if (!empty($_POST)) {
 }
 // 投稿を取得する
 $posts = $db->query('SELECT u.name, p.* FROM users u, posts p WHERE u.id=p.user_id ORDER BY p.created DESC');
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -87,6 +88,7 @@ $posts = $db->query('SELECT u.name, p.* FROM users u, posts p WHERE u.id=p.user_
               <?php else: ?>
               <p><a href="detail.php"><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?></a></p>
               <?php endif ?>
+              <p><a href="detail.php">返信する</a></p>
             </div>
           </div>
         <?php endforeach ?>
